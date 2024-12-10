@@ -1,0 +1,17 @@
+#root {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+   
+}
+
+#main {
+    width: 70%;
+   
+}
+
+
+.navbar-brand{
+    font-size: 2em;
+}
+
