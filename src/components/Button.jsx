@@ -1,9 +1,14 @@
 import  {person} from "../App"
-
+import { useState } from 'react';
 import { AddPosts } from './AddPosts'
 
 export function ClickButton() {
-    let postCount = 1;         
+    // let postCount = 1;
+    const [count, setCount] = useState(1)   
+
+    function counter() {
+        return setCount(count + 1)
+    };     
     function press(e){
         
         console.log(e.target); 
@@ -11,6 +16,8 @@ export function ClickButton() {
         const main = document.getElementById('main');
         const input = document.getElementById('post-input');
         console.log(input.value);
+
+        
         
 
         let div = document.createElement('h5');
@@ -24,9 +31,13 @@ export function ClickButton() {
             input.style.backgroundColor = 'red';
         }
         else{
+            counter()
             alert("Add new post?")
             input.style.backgroundColor = 'white';
-            div.textContent = `Post #${postCount++}: ${input.value}`;
+            div.textContent = `Post #${count} : ${input.value}`;
+            
+            console.log(count);
+            
             main.appendChild(div);
             main.appendChild(date);
             main.appendChild(img);
