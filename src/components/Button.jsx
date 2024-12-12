@@ -5,7 +5,7 @@ import { AddPosts } from './AddPosts'
 export function ClickButton() {
     // let postCount = 1;
     const [count, setCount] = useState(1)   
-
+    
     function counter() {
         return setCount(count + 1)
     };     
@@ -22,8 +22,10 @@ export function ClickButton() {
 
         let div = document.createElement('h5');
         let date = document.createElement('p');
+        let sup = document.createElement('sup');
         let img = document.createElement('button');
-        img.textContent = '❤';
+       
+        img.textContent = '🤍';
         img.style.borderRadius = '50%'
         date.textContent = `Date: ${new Date().toLocaleDateString('ru-RU')}  ${new Date().toLocaleTimeString('ru-RU')} Author: ${person.username}`
         if (input.value === '') {
@@ -37,10 +39,15 @@ export function ClickButton() {
             div.textContent = `Post #${count} : ${input.value}`;
             
             console.log(count);
+            img.onclick = function () { 
+                
+                img.textContent = '❤'
+            }
             
             main.appendChild(div);
             main.appendChild(date);
             main.appendChild(img);
+            img.appendChild(sup);
             input.value = '';
         }
         

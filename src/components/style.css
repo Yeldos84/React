@@ -1,4 +1,5 @@
 #root {
+    margin: 10px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -13,5 +14,9 @@
 
 .navbar-brand{
     font-size: 2em;
+    font-weight: 600;
 }
 
+#photo{
+    width: 20%;
+}
