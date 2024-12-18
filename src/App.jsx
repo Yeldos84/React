@@ -4,46 +4,48 @@ import viteLogo from '/vite.svg'
 // import './App.css'
 import './components/style.css'
 
-import { Nav } from './components/HeaderBlog'
-import { Profile } from './components/Profile'
-import { AddPosts } from './components/AddPosts'
-import { ProfilePhoto } from './components/ProfilePhoto'
+import React from 'react';
+import { HomeOutlined, UserOutlined } from '@ant-design/icons';
+import { Breadcrumb } from 'antd';
 
-export const person = {
-  username: "Yeldos",
-  age: 40,
-  address: "NY",
-  status: "online",
-  email: "email@email.com",
-  photo: "car.jpg"
+import { BrowserRouter, Link, NavLink, Router, Route, useRoutes } from "react-router-dom";
+
+import { Settings } from './components/Settings'
+import  {Home}  from './components/Home'
+
+
+
+function Routes() {
+  return useRoutes([
+    {
+      path: "/",
+      element: <Home/>
+      
+    },
+    {
+      path: "/settings",
+      element: <Settings />,
+    },
+  ]);
 }
 
-
-
-console.log(person.photo);
-
-const initial = {
-  title: "Blog",
-  descriptions: "Lorem"
-}
 
 function App() {
   
   return (
     <>
-      
-      <div id='root'>
-        <div id='photo'><ProfilePhoto photo = {person.photo} username = {person.username} /></div>
-        <div id='main'>
-          
-          <div><Nav  title = {initial.title}/></div>
-          <div><Profile username = {person.username} status = {person.status}
-                                age = {person.age} address = {person.address} email = {person.email} /></div>
+       <BrowserRouter>
+        <div id='menudiv'>
+          <NavLink to="/">
+            {({ isActive }) => (
+              <p style={{ color: isActive ? "red" : "black" }}>Home</p>
+            )}
+          </NavLink>
+          <NavLink to="/settings">Settings</NavLink>
+        </div>
 
-          <div><AddPosts/></div>
-        </div>  
-      </div>
-      
+        <Routes />
+      </BrowserRouter>
     </>
   )
 }

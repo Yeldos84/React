@@ -1,33 +1,19 @@
-import  {person} from "../App"
+import  {person} from "./Home"
 import { useState } from 'react';
 import { AddPosts } from './AddPosts'
 
 export function ClickButton() {
     // let postCount = 1;
-    const [count, setCount] = useState(1)   
+    const [count, setCount] = useState(1);
+    const [posts, setPosts] = useState([]);   
     
     function counter() {
         return setCount(count + 1)
     };     
     function press(e){
-        
-        console.log(e.target); 
-        
-        const main = document.getElementById('main');
         const input = document.getElementById('post-input');
         console.log(input.value);
 
-        
-        
-
-        let div = document.createElement('h5');
-        let date = document.createElement('p');
-        let sup = document.createElement('sup');
-        let img = document.createElement('button');
-       
-        img.textContent = '🤍';
-        img.style.borderRadius = '50%'
-        date.textContent = `Date: ${new Date().toLocaleDateString('ru-RU')}  ${new Date().toLocaleTimeString('ru-RU')} Author: ${person.username}`
         if (input.value === '') {
             alert('Add text for post');
             input.style.backgroundColor = 'red';
@@ -36,18 +22,16 @@ export function ClickButton() {
             counter()
             alert("Add new post?")
             input.style.backgroundColor = 'white';
-            div.textContent = `Post #${count} : ${input.value}`;
             
-            console.log(count);
-            img.onclick = function () { 
-                
-                img.textContent = '❤'
-            }
-            
-            main.appendChild(div);
-            main.appendChild(date);
-            main.appendChild(img);
-            img.appendChild(sup);
+            const newPost = {
+                id: count,
+                text: input.value,
+                date: new Date().toLocaleDateString('ru-RU') + ' ' + new Date().toLocaleTimeString('ru-RU'),
+                author: person.username,
+                liked: false
+            };
+
+            setPosts(prev => [...prev, newPost]);
             input.value = '';
         }
         
@@ -57,6 +41,35 @@ export function ClickButton() {
         
 
     }
+
+    function Liked(postId) {
+        setPosts(prev =>
+            prev.map(post =>
+                post.id === postId ? { ...post, liked: !post.liked } : post
+            )
+        );
+    }
     
-    return <button className="btn btn-outline-secondary" type="button" id="button-addon2" onClick={press}>Click</button>;
+    return (
+        <>
+            <button className="btn btn-outline-secondary" type="button" onClick={press}>
+                Add post
+            </button>
+            <hr />
+            <div>
+                {posts.map(post => (
+                    <div key={post.id}>
+                        <h5>Post #{post.id}: {post.text}</h5>
+                        <p>Date: {post.date}  Author: {post.author}</p>
+                        <button
+                            style={{ borderRadius: '50%' }}
+                            onClick={() => Liked(post.id)}
+                        >
+                            {post.liked ? '❤' : '🤍'}
+                        </button>
+                    </div>
+                ))}
+            </div>
+        </>
+    );
 }
